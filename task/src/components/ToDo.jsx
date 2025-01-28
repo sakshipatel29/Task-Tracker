@@ -1,5 +1,6 @@
 import React from 'react'
 import EditTask from './EditTask';
+import './CSS/ToDo.css';
 
 const ToDo = ({task, index, taskList, setTaskList}) => {
 
@@ -10,11 +11,13 @@ const ToDo = ({task, index, taskList, setTaskList}) => {
     }
 
 return (
-    <div>
-        <p>{task.projectName}</p>
-        <EditTask task={task} index={index} taskList={taskList} setTaskList={setTaskList}/>
-        <p>{task.taskDescription}</p>
-        <button onClick={handleDelete}>Delete</button>
+    <div className="todo-item">
+        <p className="task-name">{task.projectName}</p>
+            <div className="todo-buttons">
+                <EditTask task={task} index={index} taskList={taskList} setTaskList={setTaskList}/>
+                <p>{task.taskDescription}</p>
+                <button className="delete-button" onClick={handleDelete}>Delete</button>
+            </div>
     </div>
 )
 }

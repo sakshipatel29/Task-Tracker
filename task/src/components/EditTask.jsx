@@ -1,71 +1,96 @@
-import React from 'react'
-import { useState, useEffect } from 'react'
+import './CSS/EditTask.css';
+import React, { useState, useEffect } from 'react';
 
-const EditTask = ({task, index, taskList, setTaskList}) => {
+const EditTask = ({ task, index, taskList, setTaskList }) => {
     const [editModal, setEditModal] = useState(false);
     const [projectName, setProjectName] = useState("");
     const [taskDescription, setTaskDescription] = useState("");
     const [errorMessage, setErrorMessage] = useState("");
 
     const handleInput = (e) => {
-        let {name, value} = e.target;
+        let { name, value } = e.target;
 
-        if (name === "projectName"){ 
+        if (name === "projectName") {
             setProjectName(value);
             setErrorMessage("");
         }
-        if (name === "projectName" && name === ""){
+        if (name === "projectName" && name === "") {
             setErrorMessage("Please enter task name");
         }
         if (name === "taskDescription") setTaskDescription(value);
-    }
+    };
 
     useEffect(() => {
         setProjectName(task.projectName);
         setTaskDescription(task.taskDescription);
-    }, []);
+    }, [task]);
 
-    const handleUpdate = e => {
+    const handleUpdate = (e) => {
         e.preventDefault();
-        if(!projectName){
+        if (!projectName) {
             setErrorMessage("Please enter task name");
-        }else {
-        let taskIndex = taskList.indexOf(task);
-        taskList.splice(taskIndex,1);
-        setTaskList([...taskList, { projectName, taskDescription }]);
-        setEditModal(false);
-        console.log([...taskList, { projectName, taskDescription }]);
+        } else {
+            let taskIndex = taskList.indexOf(task);
+            taskList.splice(taskIndex, 1);
+            setTaskList([...taskList, { projectName, taskDescription }]);
+            setEditModal(false);
+            console.log([...taskList, { projectName, taskDescription }]);
         }
-    } 
+    };
 
     return (
         <>
             <div>
-                <button onClick={() => setEditModal(true)}>Edit</button> 
+                <button onClick={() => setEditModal(true)} className="edit-button">Edit</button>
             </div>
             <div>
-            {(editModal) ? (
-                    <>
-                        <div>
+                {editModal ? (
+                    <div className="modal-overlay">
+                        <div className="modal-container">
                             <form>
-                                <div>
-                                <h3>Edit Task</h3>
-                                <button onClick={() => {setEditModal(false)}}>X</button>
+                                <div className="modal-header">
+                                    <h3>Edit Task</h3>
+                                    <button 
+                                        onClick={() => {
+                                            setEditModal(false);
+                                        }} 
+                                        className="close-button"
+                                    >
+                                        X
+                                    </button>
                                 </div>
-                                <div>
-                                    Task Name: <input type='text' placeholder='a project name' name='projectName' value={projectName} onChange={handleInput} required />
-                                    <p>{errorMessage}</p>
-                                    Description:  <textarea type='text' name='taskDescription' value={taskDescription} onChange={handleInput} > </textarea>
-                                    <button onClick={handleUpdate}>Update Task</button>
+                                <div className="modal-body">
+                                    <label>Task Name:</label>
+                                    <input 
+                                        type="text" 
+                                        placeholder="Enter project name" 
+                                        name="projectName" 
+                                        value={projectName} 
+                                        onChange={handleInput} 
+                                        required 
+                                    />
+                                    <p className="error-message">{errorMessage}</p>
+                                    <label>Description:</label>
+                                    <textarea 
+                                        type="text" 
+                                        name="taskDescription" 
+                                        value={taskDescription} 
+                                        onChange={handleInput} 
+                                    ></textarea>
+                                    <button 
+                                        onClick={handleUpdate} 
+                                        className="update-button"
+                                    >
+                                        Update Task
+                                    </button>
                                 </div>
-                            </form>                           
+                            </form>
                         </div>
-                    </>
-                )
-                : null}
+                    </div>
+                ) : null}
             </div>
         </>
-    )
-}
+    );
+};
 
-export default EditTask
+export default EditTask;
