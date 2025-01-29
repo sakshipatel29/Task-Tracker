@@ -1,54 +1,87 @@
-/* ToDo.css */
-
 .todo-item {
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
-    padding: 15px;
-    margin: 10px 0;
+    justify-content: space-between;
     background-color: #f9f9f9;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+    border: 2px solid #ddd;
+    border-radius: 12px;
+    padding: 16px;
+    margin: 12px 0;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s, box-shadow 0.2s;
+    cursor: grab;
 }
 
-.todo-item p {
-    margin: 5px 0;
-    font-size: 16px;
-    font-weight: 500;
+.todo-item:active {
+    transform: scale(1.02);
+    box-shadow: 0 8px 10px rgba(0, 0, 0, 0.2);
 }
 
-.todo-item .task-name {
-    font-size: 18px;
-    font-weight: bold;
+.task-name {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 8px;
 }
 
 .todo-buttons {
     display: flex;
+    flex-direction: column;
+    align-items: flex-start;
     gap: 10px;
-    margin-top: 10px;
 }
 
-.edit-button,
-.delete-button {
+.todo-buttons p {
+    margin: 0;
+    font-size: 0.95rem;
+    color: #555;
+}
+
+.todo-buttons .delete-button {
+    background-color: #ff4d4d;
+    color: white;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.todo-buttons .delete-button:hover {
+    background-color: #ff1a1a;
+}
+
+.todo-item div span {
+    font-size: 1rem;
+    color: #333;
+}
+
+.todo-item button {
     background-color: #007bff;
     color: white;
-    padding: 8px 12px;
     border: none;
-    border-radius: 5px;
-    font-size: 14px;
+    padding: 6px 12px;
+    border-radius: 8px;
+    font-size: 0.95rem;
     cursor: pointer;
-    transition: background-color 0.3s;
+    transition: background-color 0.2s;
 }
 
-.delete-button {
-    background-color: #ff4d4d;
-}
-
-.edit-button:hover {
+.todo-item button:hover {
     background-color: #0056b3;
 }
 
-.delete-button:hover {
-    background-color: #e60000;
+.todo-item button:disabled {
+    background-color: #ddd;
+    cursor: not-allowed;
+}
+
+.todo-item .reset-button {
+    background-color: #ffcc00;
+    color: black;
+}
+
+.todo-item .reset-button:hover {
+    background-color: #e6b800;
 }
