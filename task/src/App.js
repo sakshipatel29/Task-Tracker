@@ -19,11 +19,9 @@ function App() {
         <h3>To-do List:</h3>
         <div className="task-list">
           {taskList
-            .slice(0)
-            .reverse()
             .map((task, i) => (
               <ToDo
-                key={`${task.projectName}-${i}`} 
+                key={i} 
                 task={task}
                 index={i}
                 taskList={taskList}

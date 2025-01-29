@@ -1,5 +1,5 @@
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './CSS/AddTask.css';
 
 const AddTask = ({ taskList, setTaskList }) => {
@@ -7,6 +7,14 @@ const AddTask = ({ taskList, setTaskList }) => {
     const [projectName, setProjectName] = useState('');
     const [taskDescription, setTaskDescription] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
+
+    useEffect( () => {
+        let array = localStorage.getItem("taskList");
+
+        if(array) {
+            setTaskList(JSON.parse(array))
+        }
+    }, [])
 
     const handleInput = (e) => {
         let { name, value } = e.target;
@@ -25,7 +33,17 @@ const AddTask = ({ taskList, setTaskList }) => {
         if (!projectName) {
             setErrorMessage('Please enter task name');
         } else {
-            setTaskList([...taskList, { projectName, taskDescription }]);
+            let timestamp = new Date();
+            let tempList = taskList;
+            tempList.push({
+                projectName,
+                taskDescription,
+                timestamp: timestamp,
+                duration: 0
+            })
+            localStorage.setItem("taskList", JSON.stringify (tempList))
+            window.location.reload()
+            setTaskList([...taskList, { projectName, taskDescription, timestamp: timestamp }]);
             setProjectName('');
             setTaskDescription('');
             setAddModal(false);
