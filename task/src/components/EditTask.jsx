@@ -31,10 +31,15 @@ const EditTask = ({ task, index, taskList, setTaskList }) => {
             setErrorMessage("Please enter task name");
         } else {
             let taskIndex = taskList.indexOf(task);
-            taskList.splice(taskIndex, 1);
-            setTaskList([...taskList, { projectName, taskDescription }]);
+            taskList.splice(taskIndex, 1, {
+                projectName: projectName,
+                taskDescription: taskDescription,
+                timestamp: task.timestamp,
+                duration: task.duration
+            });
+            localStorage.setItem("taskList", JSON.stringify(taskList));
+            window.location.reload();
             setEditModal(false);
-            console.log([...taskList, { projectName, taskDescription }]);
         }
     };
 

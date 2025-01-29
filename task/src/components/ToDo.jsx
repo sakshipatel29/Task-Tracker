@@ -4,7 +4,7 @@ import './CSS/ToDo.css';
 
 const ToDo = ({task, index, taskList, setTaskList}) => {
 
-    const [time, setTime] = useState(0);
+    const [time, setTime] = useState(task.duration);
     const [running, setRunning] = useState(false);
 
     useEffect( () => {
@@ -19,10 +19,28 @@ const ToDo = ({task, index, taskList, setTaskList}) => {
         return () => clearInterval(interval);
     }, [running])
 
+    const handleStop = () => {
+        setRunning(false);
+
+        let taskIndex = taskList.indexOf(task);
+        taskList.splice(taskIndex, 1, {
+            projectName: task.projectName,
+            taskDescription: task.taskDescription,
+            timestamp: task.timestamp,
+            duration: time
+        })
+
+        localStorage.setItem("taskList", JSON.stringify(taskList));
+        window.location.reload();
+
+    }
+
     const handleDelete = ItemID => {
         let removeIndex = taskList.indexOf(task);
         taskList.splice(removeIndex ,1);
-        setTaskList((currentTasks => currentTasks.filter(todo => todo.id !== ItemID)))
+        localStorage.setItem("taskList", JSON.stringify(taskList));
+        window.location.reload();
+        // setTaskList((currentTasks => currentTasks.filter(todo => todo.id !== ItemID)))
     }
 
 return (
@@ -40,7 +58,7 @@ return (
                 </div>
                 <div>
                     {running ?
-                        ( <button onClick={() => setRunning(false)}>Stop</button> ) : (
+                        ( <button onClick={handleStop}>Stop</button> ) : (
                         <button onClick={() => setRunning(true)}>Start</button>
                         )
                     }
